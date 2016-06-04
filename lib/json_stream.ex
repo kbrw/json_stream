@@ -39,17 +39,19 @@ defmodule JSONStream do
   defp finish(_,_,_), do: throw(:badarg)
 
   def stream(bin_stream,stream_path) do
-    stream = Stream.transform(bin_stream,
-      fn-> :jsx.decoder(__MODULE__,stream_path,[:stream]) end,
-      fn bin,curr->
-        {:incomplete, curr} = curr.(bin)
-        acc = Process.get(:stream_acc,[])
-        Process.put(:stream_acc,[])
-        {acc,curr}
-      end,
-      fn curr->
+    stream = bin_stream |> Stream.concat([:endbin]) |> 
+      Stream.transform(fn-> :jsx.decoder(__MODULE__,stream_path,[:stream]) end,fn
+        "",curr-> {[],curr}
+        :endbin,curr->
+          Process.put(:end_acc,curr.(:end_json))
+          {[],nil}
+        bin,curr->
+          {:incomplete, curr} = curr.(bin)
+          acc = Process.get(:stream_acc,[])
+          Process.put(:stream_acc,[])
+          {acc,curr}
+      end, fn _curr->
         Process.delete(:stream_acc)
-        Process.put(:end_acc,curr.(:end_json))
       end)
     {stream,fn-> Process.get(:end_acc,:stream_not_finished); Process.delete(:end_acc) end}
   end
