@@ -16,7 +16,10 @@ defmodule JSONStream.Mixfile do
      Small but useful wrapper above erlang `jsx` to stream json
      elements from an Elixir binary stream.
      """,
-     deps: [{:jsx, "~> 3.0"}]]
+     deps: [
+       {:jsx, "~> 3.0"},
+       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
+     ]]
   end
 
   def application do
