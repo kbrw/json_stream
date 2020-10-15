@@ -20,7 +20,7 @@ defmodule JSONStream do
 
   defp insert(value,[],path,_), do: {value,path}
   defp insert(key,[%{}=obj|rest],[_|path],_), do: {[{key,obj}|rest],[key|path]}
-  defp insert(value,[{key,%{}=obj}|rest],path,false), do: {[Dict.put(obj,key,value)|rest],path}
+  defp insert(value,[{key,%{}=obj}|rest],path,false), do: {[Map.put(obj,key,value)|rest],path}
   defp insert(value,[{key,%{}=obj}|rest],path,true) do
     Process.put(:stream_acc,[{key,value}|Process.get(:stream_acc,[])])
     {[obj|rest],path}
