@@ -7,8 +7,10 @@ json elements from an Elixir binary stream.
 ## Usage
 
 ```elixir
-stream_path = ["data",1,"actions"]
-{actions_stream,doc_fun} = File.stream!("example.json",[],2048)
+stream_path = ["data", 1, "actions"]
+{actions_stream, doc_fun} =
+  "example.json"
+  |> File.stream!([],2048)
   |> JSONStream.stream(stream_path)
 ```
 
@@ -28,15 +30,16 @@ Else, `doc_fun.()-> :stream_not_finished`.
 
 The package can be installed as:
 
-  1. Add json_stream to your list of dependencies in `mix.exs`:
+1. Add json_stream to your list of dependencies in `mix.exs`:
+  ```elixir
+  def deps do
+    [{:json_stream, "~> 0.0.1"}]
+  end
+  ```
 
-        def deps do
-          [{:json_stream, "~> 0.0.1"}]
-        end
-
-  2. Ensure json_stream is started before your application:
-
-        def application do
-          [applications: [:json_stream]]
-        end
-
+2. Ensure json_stream is started before your application:
+  ```elixir
+  def application do
+    [applications: [:json_stream]]
+  end
+  ```
