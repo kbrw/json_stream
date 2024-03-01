@@ -33,7 +33,7 @@ The package can be installed as:
 1. Add json_stream to your list of dependencies in `mix.exs`:
   ```elixir
   def deps do
-    [{:json_stream, "~> 0.0.1"}]
+    [{:json_stream, "~> 0.0.2"}]
   end
   ```
 
