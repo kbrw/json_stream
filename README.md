@@ -1,4 +1,5 @@
 # JSONStream
+[![Build Status](https://github.com/kbrw/json_stream/actions/workflows/.github/workflows/elixir.yml/badge.svg)](https://github.com/kbrw/json_stream/actions/workflows/elixir.yml) [![Hex.pm](https://img.shields.io/hexpm/v/json_stream.svg)](https://hex.pm/packages/phoenix) [![Documentation](https://img.shields.io/badge/documentation-gray)](https://hexdocs.pm/json_stream)
 
 Small but useful wrapper above erlang `jsx` to stream
 json elements from an Elixir binary stream.
@@ -6,8 +7,10 @@ json elements from an Elixir binary stream.
 ## Usage
 
 ```elixir
-stream_path = ["data",1,"actions"]
-{actions_stream,doc_fun} = File.stream!("example.json",[],2048)
+stream_path = ["data", 1, "actions"]
+{actions_stream, doc_fun} =
+  "example.json"
+  |> File.stream!([],2048)
   |> JSONStream.stream(stream_path)
 ```
 
@@ -27,15 +30,16 @@ Else, `doc_fun.()-> :stream_not_finished`.
 
 The package can be installed as:
 
-  1. Add json_stream to your list of dependencies in `mix.exs`:
+1. Add json_stream to your list of dependencies in `mix.exs`:
+  ```elixir
+  def deps do
+    [{:json_stream, "~> 0.0.2"}]
+  end
+  ```
 
-        def deps do
-          [{:json_stream, "~> 0.0.1"}]
-        end
-
-  2. Ensure json_stream is started before your application:
-
-        def application do
-          [applications: [:json_stream]]
-        end
-
+2. Ensure json_stream is started before your application:
+  ```elixir
+  def application do
+    [applications: [:json_stream]]
+  end
+  ```
