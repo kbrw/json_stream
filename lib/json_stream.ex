@@ -1,4 +1,9 @@
 defmodule JSONStream do
+  @moduledoc """
+  Small but useful wrapper above the erlang's JSON parsing toolkit `jsx` to stream json
+  elements from an Elixir binary stream.
+  """
+
   def init(stream_path), do:
     %{stream_path: Enum.reverse(stream_path), stack: [], path: []}
 
@@ -38,6 +43,23 @@ defmodule JSONStream do
   defp finish([arr|rest],[_|path],stream?) when is_list(arr), do: insert(Enum.reverse(arr), rest, path,stream?)
   defp finish(_,_,_), do: throw(:badarg)
 
+  @doc """
+  Given an input stream and and a description of the JSON path, returns a tuple with the
+  stream of elements as its first element. The second element will match
+  `:stream_not_finished` unfile the whole stream is ran, and then will be a function
+  `fn -> doc` where doc is the whole parsed JSON document, not containing the elements
+  already returned.
+
+  ## Example
+  ```elixir
+  stream_path = ["data", 1, "actions"]
+
+  {actions_stream, doc_fun} =
+    "example.json"
+    |> File.stream!([], 2048)
+    |> JSONStream.stream(stream_path)
+  ```
+  """
   def stream(bin_stream,stream_path) do
     stream = bin_stream |> Stream.concat([:endbin]) |> 
       Stream.transform(fn-> :jsx.decoder(__MODULE__,stream_path,[:stream]) end,fn
