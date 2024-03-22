@@ -1,8 +1,8 @@
 # JSONStream
 [![Build Status](https://github.com/kbrw/json_stream/actions/workflows/.github/workflows/elixir.yml/badge.svg)](https://github.com/kbrw/json_stream/actions/workflows/elixir.yml) [![Hex.pm](https://img.shields.io/hexpm/v/json_stream.svg)](https://hex.pm/packages/phoenix) [![Documentation](https://img.shields.io/badge/documentation-gray)](https://hexdocs.pm/json_stream)
 
-Small but useful wrapper above erlang `jsx` to stream
-json elements from an Elixir binary stream.
+Small but useful wrapper above the erlang's JSON parsing toolkit [jsx](https://hex.pm/packages/jsx)
+to stream json elements from an Elixir binary stream.
 
 ## Usage
 
@@ -12,6 +12,44 @@ stream_path = ["data", 1, "actions"]
   "example.json"
   |> File.stream!([],2048)
   |> JSONStream.stream(stream_path)
+
+Enum.to_list(actions_stream )
+# Will output:
+# [
+#   %{"link" => "http://www.facebook.com/X998/posts/Y998", "name" => "Like"},
+#   %{"link" => "http://www.facebook.com/X998/posts/Y998", "name" => "Comment"}
+# ]
+
+doc_fun.()
+# Will output:
+# %{
+#   "data" => [
+#     %{
+#       "actions" => [
+#         %{
+#           "link" => "http://www.facebook.com/X999/posts/Y999",
+#           "name" => "Comment"
+#         },
+#         %{"link" => "http://www.facebook.com/X999/posts/Y999", "name" => "Like"}
+#       ],
+#       "created_time" => "2010-08-02T21:27:44+0000",
+#       "from" => %{"id" => "X12", "name" => "Tom Brady"},
+#       "id" => "X999_Y999",
+#       "message" => "Looking forward to 2010!",
+#       "type" => "status",
+#       "updated_time" => "2010-08-02T21:27:44+0000"
+#     },
+#     %{
+#       "actions" => [],
+#       "created_time" => "2010-08-02T21:27:44+0000",
+#       "from" => %{"id" => "X18", "name" => "Peyton Manning"},
+#       "id" => "X998_Y998",
+#       "message" => "Where's my contract?",
+#       "type" => "status",
+#       "updated_time" => "2010-08-02T21:27:44+0000"
+#     }
+#   ]
+# }
 ```
 
 `stream_path` describe the JSON path (string for map key and integer
