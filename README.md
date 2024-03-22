@@ -1,5 +1,5 @@
-# JSONStream
-[![Build Status](https://github.com/kbrw/json_stream/actions/workflows/.github/workflows/elixir.yml/badge.svg)](https://github.com/kbrw/json_stream/actions/workflows/elixir.yml) [![Hex.pm](https://img.shields.io/hexpm/v/json_stream.svg)](https://hex.pm/packages/phoenix) [![Documentation](https://img.shields.io/badge/documentation-gray)](https://hexdocs.pm/json_stream)
+# JSONStream [![Hex.pm](https://img.shields.io/hexpm/v/json_stream.svg)](https://hex.pm/packages/json_stream) [![Documentation](https://img.shields.io/badge/documentation-gray)](https://hexdocs.pm/json_stream)
+[![Build Status](https://github.com/kbrw/json_stream/actions/workflows/.github/workflows/elixir.yml/badge.svg)](https://github.com/kbrw/json_stream/actions/workflows/elixir.yml)
 
 Small but useful wrapper above the erlang's JSON parsing toolkit [jsx](https://hex.pm/packages/jsx)
 to stream json elements from an Elixir binary stream.
